@@ -40,8 +40,8 @@ class GlobalArticleViewModel
         keyword: keyword,
         companyName: companyName,
         symbols: symbols,
-        dateFrom: dateFrom ?? _getDefaultDateFrom(),
-        dateTo: dateTo ?? _getDefaultDateTo(),
+        dateFrom: dateFrom,
+        dateTo: dateTo,
       );
 
       if (page == 1) {
@@ -66,25 +66,14 @@ class GlobalArticleViewModel
     }
   }
 
-  String _getDefaultDateFrom() {
-    final now = DateTime.now();
-    final lastMonth = now.subtract(const Duration(days: 30));
-    return lastMonth.toIso8601String().split('T')[0];
-  }
-
-  String _getDefaultDateTo() {
-    final now = DateTime.now();
-    return now.toIso8601String().split('T')[0];
-  }
-
   // 새로고침
-  Future<void> refreshArticles() async {
+  Future<void> refreshGlobalArticles() async {
     _currentPage = 1;
     await getGlobalArticle(page: 1);
   }
 
   // 검색
-  Future<void> searchArticles({
+  Future<void> searchGlobalArticles({
     String? keyword,
     String? companyName,
     String? symbols,

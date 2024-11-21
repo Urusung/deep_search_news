@@ -1,6 +1,6 @@
 import 'package:deep_search_news/viewmodels/global_article_viewmodel.dart';
 import 'package:deep_search_news/views/detail_view/detail_view.dart';
-import 'package:deep_search_news/views/home_view/widgets/article_card_widget.dart';
+import 'package:deep_search_news/views/home_view/widgets/global_article_item_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,12 +33,10 @@ class _HomeViewState extends ConsumerState<HomeView> {
     final articlesState = ref.watch(globalArticleProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('뉴스'),
-      ),
+      appBar: AppBar(),
       body: RefreshIndicator(
         onRefresh: () =>
-            ref.read(globalArticleProvider.notifier).refreshArticles(),
+            ref.read(globalArticleProvider.notifier).refreshGlobalArticles(),
         child: articlesState.when(
             data: (response) {
               if (response.data.isEmpty) {
@@ -51,8 +49,8 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 itemCount: response.data.length + 1,
                 itemBuilder: (context, index) {
                   final article = response.data[index];
-                  return ArticleCard(
-                    article: article,
+                  return GlobalArticleItemWidget(
+                    globalArticle: article,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -79,6 +77,20 @@ class _HomeViewState extends ConsumerState<HomeView> {
                 ),
               );
             }),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.public),
+            label: '해외',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: '국내',
+          ),
+        ],
       ),
     );
   }

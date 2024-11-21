@@ -67,32 +67,38 @@ class GlobalArticle {
   @JsonKey(defaultValue: '')
   final String title;
 
-  @JsonKey(defaultValue: '')
-  final String publisher;
-
-  @JsonKey(defaultValue: '')
-  final String author;
+  @JsonKey(name: 'title_ko', defaultValue: '')
+  final String titleKo;
 
   @JsonKey(defaultValue: '')
   final String summary;
 
+  @JsonKey(name: 'summary_ko', defaultValue: '')
+  final String summaryKo;
+
   @JsonKey(name: 'image_url')
   final String? imageUrl;
-
-  @JsonKey(name: 'thumbnail_url')
-  final String? thumbnailUrl;
 
   @JsonKey(name: 'content_url')
   final String? contentUrl;
 
-  @JsonKey(defaultValue: null)
-  final List<dynamic>? esg;
+  @JsonKey(name: 'thumbnail_url')
+  final String? thumbnailUrl;
+
+  @JsonKey(defaultValue: '')
+  final String publisher;
+
+  @JsonKey(defaultValue: '')
+  final String reason;
+
+  @JsonKey(defaultValue: '')
+  final String importance;
 
   @JsonKey(defaultValue: [])
-  final List<Company> companies;
+  final List<ESG> esg;
 
   @JsonKey(defaultValue: [])
-  final List<Entity> entities;
+  final List<Companies> companies;
 
   @JsonKey(name: 'published_at', defaultValue: '')
   final String publishedAt;
@@ -101,15 +107,17 @@ class GlobalArticle {
     required this.id,
     required this.sections,
     required this.title,
-    required this.publisher,
-    required this.author,
+    required this.titleKo,
     required this.summary,
+    required this.summaryKo,
     this.imageUrl,
-    this.thumbnailUrl,
     this.contentUrl,
-    this.esg,
+    this.thumbnailUrl,
+    required this.publisher,
+    required this.reason,
+    required this.importance,
+    required this.esg,
     required this.companies,
-    required this.entities,
     required this.publishedAt,
   });
 
@@ -119,9 +127,37 @@ class GlobalArticle {
 }
 
 @JsonSerializable()
-class Company {
+class ESG {
+  @JsonKey(defaultValue: '')
+  final String category;
+
+  @JsonKey(defaultValue: 0)
+  final double score;
+
+  @JsonKey(name: 'confidence_score', defaultValue: 0)
+  final double confidenceScore;
+
+  @JsonKey(defaultValue: '')
+  final String reason;
+
+  ESG({
+    required this.category,
+    required this.score,
+    required this.confidenceScore,
+    required this.reason,
+  });
+
+  factory ESG.fromJson(Map<String, dynamic> json) => _$ESGFromJson(json);
+  Map<String, dynamic> toJson() => _$ESGToJson(this);
+}
+
+@JsonSerializable()
+class Companies {
   @JsonKey(defaultValue: '')
   final String name;
+
+  @JsonKey(name: 'name_ko', defaultValue: '')
+  final String nameKo;
 
   @JsonKey(defaultValue: '')
   final String symbol;
@@ -130,33 +166,71 @@ class Company {
   final String exchange;
 
   @JsonKey(defaultValue: '')
+  final String importance;
+
+  @JsonKey(defaultValue: '')
   final String sentiment;
 
-  Company({
+  @JsonKey(defaultValue: '')
+  final String reason;
+
+  @JsonKey(name: 'stock_info')
+  final StockInfo? stockInfo;
+
+  Companies({
     required this.name,
-    required this.symbol,
     required this.exchange,
+    required this.symbol,
+    required this.importance,
     required this.sentiment,
+    required this.reason,
+    required this.nameKo,
+    this.stockInfo,
   });
 
-  factory Company.fromJson(Map<String, dynamic> json) =>
-      _$CompanyFromJson(json);
-  Map<String, dynamic> toJson() => _$CompanyToJson(this);
+  factory Companies.fromJson(Map<String, dynamic> json) =>
+      _$CompaniesFromJson(json);
+  Map<String, dynamic> toJson() => _$CompaniesToJson(this);
 }
 
 @JsonSerializable()
-class Entity {
+class StockInfo {
   @JsonKey(defaultValue: '')
-  final String type;
+  final String date;
 
-  @JsonKey(defaultValue: '')
-  final String name;
+  @JsonKey(defaultValue: 0)
+  final double open;
 
-  Entity({
-    required this.type,
-    required this.name,
+  @JsonKey(defaultValue: 0)
+  final double high;
+
+  @JsonKey(defaultValue: 0)
+  final double low;
+
+  @JsonKey(defaultValue: 0)
+  final double close;
+
+  @JsonKey(defaultValue: 0)
+  final double volume;
+
+  @JsonKey(defaultValue: 0)
+  final double change;
+
+  @JsonKey(name: 'change_percent', defaultValue: 0)
+  final double changePercent;
+
+  StockInfo({
+    required this.date,
+    required this.open,
+    required this.high,
+    required this.low,
+    required this.close,
+    required this.volume,
+    required this.change,
+    required this.changePercent,
   });
 
-  factory Entity.fromJson(Map<String, dynamic> json) => _$EntityFromJson(json);
-  Map<String, dynamic> toJson() => _$EntityToJson(this);
+  factory StockInfo.fromJson(Map<String, dynamic> json) =>
+      _$StockInfoFromJson(json);
+  Map<String, dynamic> toJson() => _$StockInfoToJson(this);
 }

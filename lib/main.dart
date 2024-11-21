@@ -13,8 +13,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: FlexThemeData.light(scheme: FlexScheme.flutterDash),
-      darkTheme: FlexThemeData.dark(scheme: FlexScheme.flutterDash),
+      theme: FlexThemeData.light(
+          scheme: FlexScheme.flutterDash, fontFamily: 'Pretendard'),
+      darkTheme: FlexThemeData.dark(
+          scheme: FlexScheme.flutterDash, fontFamily: 'Pretendard'),
       themeMode: ThemeMode.system,
       home: const HomeView(),
     );
