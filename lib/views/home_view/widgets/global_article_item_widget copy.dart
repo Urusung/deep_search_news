@@ -15,10 +15,19 @@ class GlobalArticleItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.only(
         left: 16,
         right: 16,
+      ),
+      margin: const EdgeInsets.only(
+        left: 16,
+        right: 16,
+        bottom: 16,
+      ),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: GestureDetector(
         onTap: onTap,
@@ -180,7 +189,6 @@ class GlobalArticleItemWidget extends StatelessWidget {
             //       )),
             // ],
             const Gap(12),
-            Divider(color: Colors.grey[300]),
           ],
         ),
       ),

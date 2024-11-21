@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: FlexThemeData.light(
-          scheme: FlexScheme.flutterDash, fontFamily: 'Pretendard'),
+          scheme: FlexScheme.purpleM3, fontFamily: 'Pretendard'),
       darkTheme: FlexThemeData.dark(
-          scheme: FlexScheme.flutterDash, fontFamily: 'Pretendard'),
+          scheme: FlexScheme.purpleM3, fontFamily: 'Pretendard'),
       themeMode: ThemeMode.system,
       home: const HomeView(),
     );

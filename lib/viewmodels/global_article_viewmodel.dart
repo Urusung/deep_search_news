@@ -32,7 +32,10 @@ class GlobalArticleViewModel
     String? dateTo,
   }) async {
     try {
-      state = const AsyncValue.loading();
+      if (page == 1) {
+        state = const AsyncValue.loading();
+      }
+
       final response = await _apiService.getGlobalArticles(
         apiKey: _apiKey,
         page: page ?? _currentPage,
